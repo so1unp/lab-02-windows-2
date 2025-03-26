@@ -1,0 +1,31 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "build current file",
+            "type": "shell",
+            "command": "cd ${fileDirname} && make ${fileBasenameNoExtension} && echo 'Compilacion OK' || echo 'Error de compilacion'",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "presentation": {
+                "echo": true,
+                "reveal": "silent",
+                "focus": false,
+                "showReuseMessage": false,
+                "revealProblems": "onProblem",
+                "close": true,
+                "panel": "shared"
+            }
+        },
+        {
+            "label": "clean",
+            "type": "shell",
+            "command": "make clean"
+        }
+    ]
+}
