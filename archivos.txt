@@ -1,0 +1,10 @@
+archivos.txt
+bin
+Makefile
+README.md
+saludo2.txt
+saludo.txt
+sh.c
+so1.txt
+soo.txt
+so.txt

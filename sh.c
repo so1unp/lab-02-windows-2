@@ -89,11 +89,8 @@ void runcmd(struct cmd *cmd)
 
         // fprintf(stderr, "REDIR no implementado\n");
         rcmd = (struct redircmd *)cmd;
-        printf("*\n");
-        printf("%c\n", rcmd->type);
-        if (rcmd->type == '<')
+        if (rcmd->fd == 0)
         {
-            printf("<\n");
 
             close(rcmd->fd);
             int fd = open(rcmd->file, rcmd->mode, 0644);
@@ -103,10 +100,9 @@ void runcmd(struct cmd *cmd)
                 exit(1);
             }
         }
-        else if ((rcmd->type) == '>')
+        else if (rcmd->fd == 1)
         {
 
-            printf(">\n");
             close(rcmd->fd);
             int fd = open(rcmd->file, rcmd->mode, 0644);
             if (fd < 0)
