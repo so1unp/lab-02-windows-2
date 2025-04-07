@@ -73,28 +73,32 @@ void runcmd(struct cmd *cmd)
         ecmd = (struct execcmd *)cmd;
         if (ecmd->argv[0] == 0)
             exit(0);
-        // Eliminar el mensaje de error e implementar
-        // la ejecución de comandos.
+
         execvp(ecmd->argv[0], ecmd->argv);
 
         break;
 
     case REDIR:
-
-        if ((rcmd->type) == '>')
-        {
-            int fd = open(rcmd->file, O_CREAT | O_WRONLY, 0644);
-        }
-        else if ((rcmd->type) == '<')
-        {
-            int fd = open(rcmd->file, rcmd->mode);
-        }
-        else
-        {
-            fprintf(stderr, "runcmd desconocido\n");
-            exit(-1);
-        }
         rcmd = (struct redircmd *)cmd;
+
+        // Abre o crea un archivo y devuelve un entero que representa ese archivo en el sistema
+        int fd = open(rcmd->file, rcmd->mode, 0644);
+
+        if (fd < 0)
+        {
+            perror("Error en la salida");
+            exit(1);
+        }
+
+        // dup 2Redirecciona la entrada y salida estandar
+        if (dup2(fd, rcmd->fd) < 0)
+        {
+            perror("dup2");
+            close(fd);
+            exit(1);
+        }
+
+        close(fd);
         runcmd(rcmd->cmd);
         break;
 
