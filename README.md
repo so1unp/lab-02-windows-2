@@ -34,7 +34,23 @@ El parser implementado en el _shell_ ya reconoce estos operadores y genera una e
 - Imprimir un mensaje de error si alguna de las llamadas al sistema falla, utilizando [`perror()`](http://man7.org/linux/man-pages/man3/perror.3.html).
 - Verificar los permisos con los que se crea el archivo en caso de la redirección de salida (`>`).
 
-### 2.3: Shell de xv6
+### 2.3: Tuberías
+Implementar el soporte para uso de tuberías (_pipes_). El objetivo es poder ejecutar comandos como:
+
+```console
+$ echo "hola" | wc
+    1   1   5
+$
+```
+
+El _parser_ del intérprete de comandos ya reconoce el operador `|` y guarda en la estructura `pipecmd` todos los datos requeridos para conectar dos procesos mediante una tubería. Deben agregar el código necesario en la función `runcmd()` en la etiqueta `PIPE` del `case`. Las llamadas al sistema que deben utilizar son:
+
+* [`pipe()`](http://man7.org/linux/man-pages/man2/pipe.2.html): crea una tubería.
+* [`fork()`](http://man7.org/linux/man-pages/man2/fork.2.html): para crear un nuevo proceso.
+* [`close()`](http://man7.org/linux/man-pages/man2/close.2.html): para cerrar un descriptor de archivo.
+* [`dup2()`](http://man7.org/linux/man-pages/man2/dup.2.html): para duplicar un descriptor de archivo.
+
+### 2.4: Shell de xv6
 El repositorio `xv6` contiene el código de _xv6_, un sistema operativo muy sencillo basado en UNIX. Parados en dicho repositorio pueden ejecutarlo utilizando la maquina virtual *QEMU* mediante el comando `make qemu`. Debe aparecer una ventana con algo similar a lo siguiente: 
 
 ```console
