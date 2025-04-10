@@ -90,7 +90,7 @@ void runcmd(struct cmd *cmd)
             exit(1);
         }
 
-        // dup 2Redirecciona la entrada y salida estandar
+        // dup 2 Redirecciona la entrada y salida estandar
         if (dup2(fd, rcmd->fd) < 0)
         {
             perror("dup2");
