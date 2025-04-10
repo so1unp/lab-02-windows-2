@@ -103,13 +103,8 @@ void runcmd(struct cmd *cmd)
         break;
 
     case PIPE:
-        // Eliminar el mensaje de error e implementar
-        // la interconexión de procesos mediante tuberías
-        fprintf(stderr, "PIPE no implementado");
-        /* USAR el siguiente código para castear cmd a redircmd
-        pcmd = (struct pipecmd *) cmd;
-        runcmd(pcmd->left);
-        */
+        pcmd = (struct pipecmd *)cmd;
+
         break;
     }
     exit(0);
